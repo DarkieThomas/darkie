@@ -8,7 +8,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
-    pkg_path = get_package_share_directory('my_robot')
+    pkg_path = get_package_share_directory('darkie')
 
     xacro_file = os.path.join(pkg_path, 'urdf', 'maze_urdf.xacro')
 
