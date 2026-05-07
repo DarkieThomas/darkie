@@ -1,0 +1,16 @@
+<package format="3">
+  <name>darkie</name>
+  <version>0.0.0</version>
+  <description>My robot package</description>
+
+  <maintainer email="you@todo.todo">you</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+
+</package>
