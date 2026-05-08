@@ -10,32 +10,34 @@ ADDR_TORQUE_ENABLE = 64
 ADDR_OPERATING_MODE = 11
 ADDR_GOAL_VELOCITY = 104
 
+TORQUE_DISABLE = 0
 TORQUE_ENABLE = 1
 VELOCITY_MODE = 1
 
 portHandler = PortHandler(DEVICENAME)
 packetHandler = PacketHandler(PROTOCOL_VERSION)
 
-if portHandler.openPort():
-    print("Port opened")
-else:
-    print("Failed to open port")
+if not portHandler.openPort():
+    print("Failed open port")
     quit()
 
-if portHandler.setBaudRate(BAUDRATE):
-    print("Baudrate set")
-else:
+if not portHandler.setBaudRate(BAUDRATE):
     print("Failed baudrate")
     quit()
 
+print("Connected")
+
+# 1 disable torque
 packetHandler.write1ByteTxRx(
     portHandler,
     DXL_ID,
     ADDR_TORQUE_ENABLE,
-    0
+    TORQUE_DISABLE
 )
 
+print("Torque disabled")
 
+# 2 set velocity mode
 dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(
     portHandler,
     DXL_ID,
@@ -43,15 +45,19 @@ dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(
     VELOCITY_MODE
 )
 
-print(dxl_comm_result, dxl_error)
+print("Mode:", dxl_comm_result, dxl_error)
 
-packetHandler.write1ByteTxRx(
+# 3 enable torque
+dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(
     portHandler,
     DXL_ID,
     ADDR_TORQUE_ENABLE,
     TORQUE_ENABLE
 )
 
+print("Torque:", dxl_comm_result, dxl_error)
+
+# 4 set velocity
 dxl_comm_result, dxl_error = packetHandler.write4ByteTxRx(
     portHandler,
     DXL_ID,
@@ -59,6 +65,4 @@ dxl_comm_result, dxl_error = packetHandler.write4ByteTxRx(
     100
 )
 
-print(dxl_comm_result, dxl_error)
-
-print("Motor spinning")
+print("Velocity:", dxl_comm_result, dxl_error)
