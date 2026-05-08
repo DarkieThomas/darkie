@@ -35,12 +35,15 @@ packetHandler.write1ByteTxRx(
     0
 )
 
-packetHandler.write1ByteTxRx(
+
+dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(
     portHandler,
     DXL_ID,
     ADDR_OPERATING_MODE,
     VELOCITY_MODE
 )
+
+print(dxl_comm_result, dxl_error)
 
 packetHandler.write1ByteTxRx(
     portHandler,
@@ -49,11 +52,13 @@ packetHandler.write1ByteTxRx(
     TORQUE_ENABLE
 )
 
-packetHandler.write4ByteTxRx(
+dxl_comm_result, dxl_error = packetHandler.write4ByteTxRx(
     portHandler,
     DXL_ID,
     ADDR_GOAL_VELOCITY,
-    30
+    100
 )
+
+print(dxl_comm_result, dxl_error)
 
 print("Motor spinning")
